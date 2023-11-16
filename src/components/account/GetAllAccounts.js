@@ -4,15 +4,15 @@ import Table from '../shared/table/Table';
 import PaginationApp from '../shared/table/PaginationApp';
 import PageSelect from '../shared/table/PageSelect';
 
-const GetAllAccounts = ({props}) => {
+const GetAllAccounts = (props) => {
 
   const [accounts, setAccounts] = useState([]);
   const [pageNumber, setPageNumber] = useState(0);
   const [pageSize, setPageSize] = useState(2);
-  const [totalPages,setTotalPages]=useState(0);
-  const [totalElements,setTotalElements]=useState();
-  const [filteredData,setFilteredData]=useState('');
-  let search='';
+  const [totalPages, setTotalPages] = useState(0);
+  const [totalElements, setTotalElements] = useState();
+  const [filteredData, setFilteredData] = useState('');
+  let search = '';
 
   const handleApi = async () => {
     let response = await getAllAccounts(pageNumber, pageSize);
@@ -22,18 +22,18 @@ const GetAllAccounts = ({props}) => {
     console.log(response);
   }
 
- 
+
 
   useEffect(() => {
 
     handleApi();
 
-  }, [pageNumber, pageSize,props])
+  }, [pageNumber, pageSize, props])
 
   return (
     <div className='container'>
       <div className='row my-5'>
-        <div className='col-4'>
+        <div className='col-4 offset-1'>
           <PaginationApp
             totalPages={totalPages}
             pageSize={pageSize}
@@ -42,29 +42,37 @@ const GetAllAccounts = ({props}) => {
           >
           </PaginationApp>
         </div>
+
         <div className='col-3'>
+          {
+            props.search ?
 
-          <input className='rounded-pill px-3 text-primary fw-bold'
-          onChange={(e)=>{
-            search=e.target.value;
-            let d=accounts.filter((account)=>{
-              return search.toLowerCase===''?account:account.holderName.includes(search)||account.bankName.includes(search)||
-              account.surName.includes(search)
-              ||account.ifsc.includes(search)
-              ||account.branch.includes(search)
-              ||account.accountNo.toString().includes(search)
-              ||account.balance.toString().includes(search)
-              ;
-            })
-            setFilteredData(d);
-          }}
-          ></input>
 
+              <input className='rounded-pill px-3 text-primary fw-bold' placeholder='Search Here'
+                onChange={(e) => {
+                  search = e.target.value;
+                  let d = accounts.filter((account) => {
+                    return search.toLowerCase === '' ? account :
+                      account.holderName.includes(search)
+                      || account.bankName.includes(search)
+                      || account.surName.includes(search)
+                      || account.ifsc.includes(search)
+                      || account.branch.includes(search)
+                      || account.accountNo.toString().includes(search)
+                      || account.balance.toString().includes(search)
+                      ;
+                  })
+                  setFilteredData(d);
+                }}
+              ></input>
+              :null
+
+        }
         </div>
         <div className='col-2 offset-1'>
 
           <PageSelect
-            
+
             totalElements={totalElements}
             setPageSize={setPageSize}
             setPageNumber={setPageNumber}
@@ -74,7 +82,7 @@ const GetAllAccounts = ({props}) => {
           >
           </PageSelect>
         </div>
-        
+
       </div>
 
       <div className='row'>
@@ -83,9 +91,9 @@ const GetAllAccounts = ({props}) => {
 
         <div className='col-10 offset-1 shadow-lg'>
 
-          <Table data={filteredData==[]?accounts:filteredData}
+          <Table data={filteredData == [] ? accounts : filteredData}
             canUpdate={false}
-            canDelete={true}  
+            canDelete={true}
           ></Table>
 
         </div>

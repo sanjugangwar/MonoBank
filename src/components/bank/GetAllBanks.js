@@ -3,7 +3,7 @@ import { getAllBanks } from '../../services/ApiService';
 import Table from '../shared/table/Table';
 import PaginationApp from '../shared/table/PaginationApp';
 import PageSelect from '../shared/table/PageSelect';
-import EditProfile from '../bank/EditProfile'
+import EditBank from './EditBank'
 import { deleteBank, updateBank } from '../../services/bank/BankApis';
 
 export const GetAllBanks = ({ props }) => {
@@ -37,11 +37,11 @@ export const GetAllBanks = ({ props }) => {
 
     }
 
-    const handleUpdate=async(bankName,abbrebiation,branch,ifsc)=>{
-           setBankName(bankName)
-           setBranch(branch)
-           setAbbrebiation(abbrebiation)
-           setIfsc(ifsc);
+    const handleUpdate=async(bank)=>{
+           setBankName(bank.bankName)
+           setBranch(bank.branch)
+           setAbbrebiation(bank.abbrevation)
+           setIfsc(bank.ifsc);
            setShow(true);
     }
 
@@ -77,7 +77,7 @@ export const GetAllBanks = ({ props }) => {
     }
     return (
         <>
-            <EditProfile 
+            <EditBank
          bankName={bankName} 
          abbrebiation={abbrebiation} 
          branch={branch}
@@ -89,7 +89,7 @@ export const GetAllBanks = ({ props }) => {
          ifsc={ifsc}
          callUpdateBank={callUpdateBank}
          
-         ></EditProfile>
+         ></EditBank>
 
            
 

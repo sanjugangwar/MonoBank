@@ -26,7 +26,7 @@ function EditCustomer(data) {
                 keyboard={false}
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>{data.title}</Modal.Title>
+                    <Modal.Title>Edit Customer</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
 

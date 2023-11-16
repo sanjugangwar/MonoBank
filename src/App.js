@@ -12,6 +12,9 @@ import Footer from './components/shared/footer/Footer';
 import Transaction from './components/customer/Transaction';
 import EditProfile from './components/customer/EditProfile';
 import AccountsDetail from './components/account/AccountsDetail';
+import AllCustomerDetails from './components/customer/AllCustomerDetails';
+import Passbook from './components/customer/Passbook';
+import AllTransactions from './components/bank/AllTransactions';
 
 function App() {
   return (
@@ -29,7 +32,10 @@ function App() {
         <Route exact path="/transaction" element={<Transaction></Transaction>}></Route>
         <Route exact path="/editProfile" element={<EditProfile></EditProfile>}></Route>
         <Route exact path="/accountsDetail" element={<AccountsDetail></AccountsDetail>}></Route>
-
+        <Route exact path="/customersDetail" element={<AllCustomerDetails></AllCustomerDetails>}></Route>
+        <Route exact path="/transaction" element={<Transaction></Transaction>}></Route>
+        <Route exact path="/passbook" element={<Passbook></Passbook>}></Route>
+        <Route exact path="/showAllTransactions" element={<AllTransactions></AllTransactions>}></Route>
       </Routes>
 
     </>

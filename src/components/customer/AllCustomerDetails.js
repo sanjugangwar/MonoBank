@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react'
+import { GetAllCustomer } from './GetAllCustomer'
 import HeadingTag from '../shared/HeadingTag'
-import GetAllAccounts from './GetAllAccounts'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
 
-const AccountsDetail = () => {
+const AllCustomerDetails = () => {
 
-
-  const naviagate=new useNavigate();
+    const naviagate=new useNavigate();
 
     const validateUser=()=>{
         if(localStorage.getItem('auth')==null){
@@ -23,14 +22,15 @@ const AccountsDetail = () => {
     useEffect(()=>{
         validateUser();
     },[])
-  return (
-    <div>
 
-      <HeadingTag first="Accounts" second="Detail"></HeadingTag>
-      <GetAllAccounts search={true}></GetAllAccounts>
+    return (
+        <div>
 
-    </div>
-  )
+            <HeadingTag first="Customers" second="Detail"></HeadingTag>
+            <GetAllCustomer search={true}></GetAllCustomer>
+
+        </div>
+    )
 }
 
-export default AccountsDetail
+export default AllCustomerDetails

@@ -1,30 +1,31 @@
 import React, { useEffect, useState } from 'react'
-import EditProfile from '../../bank/EditProfile';
+import EditProfile from '../../bank/EditBank';
 import EditCustomer from '../../customer/EditCustomer';
 import HeadingTag from '../HeadingTag';
 
 const Table = (data) => {
 
     let title = data.title;
-    let canDelete=data.canDelete;
-    let canUpdate=data.canUpdate;
-    let modalUsed=data.modal;
+    let canDelete = data.canDelete;
+    let canUpdate = data.canUpdate;
+    let modalUsed = data.modal;
 
-    const handleUpdate=data.handleUpdate;
-    const handleDelete=data.handleDelete;
+    const handleUpdate = data.handleUpdate;
+    const handleDelete = data.handleDelete;
 
     let rowOfUsers;
     let headOfusers;
     data = data.data;
 
-    if(data.length==0){
+    if (data.length == 0) {
         return <HeadingTag second="Oops! No Data Found"></HeadingTag>
     }
 
     if (data.length > 0) {
 
         let headData = Object.keys(data[0]);
-        headData.push('Actions');
+        if (canDelete || canUpdate)
+            headData.push('Actions');
 
         headOfusers = headData.map(
             (d) => {
@@ -53,25 +54,29 @@ const Table = (data) => {
 
 
                     }
-                    <td >
-                        {
-                          
-                          <button className='btn btn-outline-success me-2'
+                    {canUpdate || canDelete ?
+                        <td >
+                            {
 
-                          onClick={()=>
-                            handleUpdate(d)
-                          
-                          }
-                          
-                      ><i class="bi bi-pencil-square me-1"></i>Edit Detail</button>
-                           
-                        }
-                        {
-                           canDelete? <button className='btn btn-outline-danger'
-                           onClick={()=>handleDelete(d)}
-                           ><i class="bi bi-trash3-fill me-1"></i> Delete </button>:null
-                        }
-                    </td>
+                                canUpdate ?
+
+                                    <button className='btn btn-outline-success me-2'
+
+                                        onClick={() =>
+                                            handleUpdate(d)
+
+                                        }
+
+                                    ><i class="bi bi-pencil-square me-1"></i>Edit Detail</button> : null
+
+                            }
+                            {
+                                canDelete ? <button className='btn btn-outline-danger'
+                                    onClick={() => handleDelete(d)}
+                                ><i class="bi bi-trash3-fill me-1"></i> Delete </button> : null
+                            }
+                        </td>
+                        : null}
 
                 </tr>
             )
@@ -80,7 +85,7 @@ const Table = (data) => {
     }
     return (
         <>
-            
+
             <table class="table table-bordered mt-2 border-primary">
                 <thead className='text-center'>
                     <tr>

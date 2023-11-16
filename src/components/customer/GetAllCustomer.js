@@ -6,46 +6,46 @@ import PageSelect from '../shared/table/PageSelect';
 import EditCustomer from './EditCustomer';
 import { deleteCustomer, updateCustomer } from '../../services/customer/CustomerApis';
 
-export const GetAllCustomer = ({ props }) => {
+export const GetAllCustomer = (props) => {
 
 
   const [pageNumber, setPageNumber] = useState(0);
   const [pageSize, setPageSize] = useState(2);
-  const [data, setData] = useState([]);
+  const [customers, setCustomers] = useState([]);
   const [totalPages, setTotalPages] = useState();
   const [totalElements, setTotalElements] = useState();
 
-  const [customerId,setCustomerId]=useState();
-  const [name,setName]=useState();
-  const [surname,setSurname]=useState();
-  const [mobile,setMobile]=useState();
-  const [email,setEmail]=useState();
-  const [show,setShow]=useState();
-  const [updateData,setUpdateData]=useState();
+  const [customerId, setCustomerId] = useState();
+  const [name, setName] = useState();
+  const [surname, setSurname] = useState();
+  const [mobile, setMobile] = useState();
+  const [email, setEmail] = useState();
+  const [show, setShow] = useState();
+  const [updateData, setUpdateData] = useState();
+  let searchs = '';
+  const [filteredData, setFilteredData] = useState([]);
 
 
   const handleSubmit = async () => {
     let response;
-
     response = await getAllCustomers(pageNumber, pageSize);
-
-
     console.log(response);
-    setData(response.data.content);
+    setCustomers(response.data.content);
     setTotalElements(parseInt(response.headers['customer-count']));
     setTotalPages(Math.ceil(parseInt(response.headers['customer-count']) / pageSize));
     console.log(response.request.responseURL)
 
+
   }
 
-  const handleDelete=async(d)=>{
+  const handleDelete = async (d) => {
 
-    let response=await deleteCustomer(d.id);
+    let response = await deleteCustomer(d.id);
     setUpdateData(response);
 
   }
 
-  const handleUpdate=(d)=>{
+  const handleUpdate = (d) => {
 
     setName(d.name);
     setSurname(d.surname);
@@ -55,15 +55,15 @@ export const GetAllCustomer = ({ props }) => {
     setCustomerId(d.id);
   }
 
-  const updateCustomerHandler=async()=>{
-    let response=await updateCustomer(customerId,name,surname,mobile,email);
+  const updateCustomerHandler = async () => {
+    let response = await updateCustomer(customerId, name, surname, mobile, email);
     setUpdateData(response);
 
   }
 
   useEffect(() => {
     handleSubmit();
-  }, [totalElements, pageSize, pageNumber, props,updateData])
+  }, [totalElements, pageSize, pageNumber, props, updateData])
 
 
   let pages = [];
@@ -72,23 +72,23 @@ export const GetAllCustomer = ({ props }) => {
   }
   return (
     <>
-     <EditCustomer
-     name={name}
-     surname={surname}
-     mobile={mobile}
-     email={email}
-     show={show}
-     setName={setName}
-     setMobile={setMobile}
-     setEmail={setEmail}
-     setSurname={setSurname}
-     setShow={setShow}
-     updateCustomerHandler={updateCustomerHandler}
-     
-     ></EditCustomer>
+      <EditCustomer
+        name={name}
+        surname={surname}
+        mobile={mobile}
+        email={email}
+        show={show}
+        setName={setName}
+        setMobile={setMobile}
+        setEmail={setEmail}
+        setSurname={setSurname}
+        setShow={setShow}
+        updateCustomerHandler={updateCustomerHandler}
+
+      ></EditCustomer>
       <div className='container'>
         <div className='row my-5'>
-          <div className='col-8'>
+          <div className='col-4'>
             <PaginationApp
               totalPages={totalPages}
               pageSize={pageSize}
@@ -97,6 +97,27 @@ export const GetAllCustomer = ({ props }) => {
 
             >
             </PaginationApp>
+          </div>
+          <div className='col-4'>
+            {
+              props.search ?
+
+                <input className='rounded-pill px-3 text-primary fw-bold'
+                  placeholder='search here'
+                  onChange={(e) => {
+                    searchs = e.target.value;
+                    let d = customers.filter((customer) => {
+                      return searchs.toLowerCase === '' ?
+                        customer :
+                        customer.name.includes(searchs)
+                        || customer.surname.includes(searchs)
+                        || customer.mobile.includes(searchs)
+                        || customer.email.includes(searchs)
+                    })
+                    setFilteredData(d);
+                  }}
+                ></input> : null}
+
           </div>
           <div className='col-2 offset-1'>
 
@@ -112,7 +133,7 @@ export const GetAllCustomer = ({ props }) => {
             </PageSelect>
           </div>
           <div className='col-10 offset-1'>
-            <Table data={data}
+            <Table data={filteredData.length == 0 ? customers : filteredData}
               title="Edit Customer Details"
               modal="EditCustomer"
               canUpdate={true}

@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { updateBank } from '../../services/bank/BankApis';
 
-function EditProfile(data) {
+function EditBank(data) {
 
     const handleClose = () => data.setShow(false);
     const handleShow = () => {
@@ -83,4 +83,4 @@ function EditProfile(data) {
     );
 }
 
-export default EditProfile;
+export default EditBank;

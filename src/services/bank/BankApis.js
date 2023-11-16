@@ -1,38 +1,51 @@
 import axios from "axios";
 
-export const updateBank = async (name,abbrebiation,branch,ifsc) => {
+export const updateBank = async (name, abbrebiation, branch, ifsc) => {
 
-    let response = await axios.put(
-        'http://localhost:8084/bankapp/updateBank', {
-            bankName:name,
-            abbrevation:abbrebiation,
-            branch:branch,
-            ifsc:ifsc
+    try {
+
+        let response = await axios.put(
+            'http://localhost:8084/bankapp/updateBank', {
+            bankName: name,
+            abbrevation: abbrebiation,
+            branch: branch,
+            ifsc: ifsc
         }, {
-        headers: {
-            Authorization: "Bearer " + localStorage.getItem('auth')
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('auth')
+            }
         }
+
+        )
+
+        return response;
+    }
+    catch (error) {
+        alert("some error occured")
     }
 
-    )
-
-    return response;
 
 }
 
-export const deleteBank=async(bankId)=>{
+export const deleteBank = async (bankId) => {
 
-    let response = await axios.delete(
-        'http://localhost:8084/bankapp/deleteBank', {
-        params: {
-            bankId:bankId
-        },
-        headers: {
-            Authorization:"Bearer "+localStorage.getItem('auth')
+    try {
+
+        let response = await axios.delete(
+            'http://localhost:8084/bankapp/deleteBank', {
+            params: {
+                bankId: bankId
+            },
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('auth')
+            }
         }
-    }
-    )
+        )
 
-    return response;
+        return response;
+    } catch (error) {
+        alert("some error occured")
+    }
+
 
 }
