@@ -81,7 +81,7 @@ const AddCustomer = () => {
 
 
     return (
-        <>
+        <div>
             <div className="container">
 
                 <div className="row">
@@ -93,7 +93,7 @@ const AddCustomer = () => {
                     <div className="col-8 offset-2">
 
                         <form className="shadow-lg p-5">
-                            {msg!=""?<div className='text-center text-danger'>{msg}</div>:null}
+                            {msg!="" && error?<div className='text-center text-danger'>{msg}</div>:null}
                             <div className="mb-3">
                                 <label className="form-label">First Name<span className='text-danger'>*</span></label>
                                 <input type="text" className="form-control rounded-pill text-primary fw-bold"
@@ -130,7 +130,7 @@ const AddCustomer = () => {
                                                 setError(true)
 
                                             }
-
+                                            setMsg("");
                                             setSurname(e.target.value)
                                         }
 
@@ -143,9 +143,10 @@ const AddCustomer = () => {
                             <div className="mb-3">
                                 <label className="form-label">Mobile<span className='text-danger'>*</span></label>
                                 <input type="number" className="form-control rounded-pill text-primary fw-bold"
-                                    onChange={(e) =>
-
+                                    onChange={(e) =>{
+                                        setMsg("");
                                         setMobile(e.target.value)
+                                    }
                                     }
 
                                     value={mobile}
@@ -157,8 +158,10 @@ const AddCustomer = () => {
                                 <label className="form-label">Email<span className='text-danger'>*</span></label>
                                 <input type="email" className="form-control rounded-pill  text-primary fw-bold"
                                     onChange={
-                                        (e) =>
+                                        (e) =>{
                                             setEmail(e.target.value)
+                                            setMsg("")
+                                        }
                                     }
 
                                     value={email}
@@ -171,8 +174,10 @@ const AddCustomer = () => {
                                 <label className="form-label">Username<span className='text-danger'>*</span></label>
                                 <input type="text" className="form-control rounded-pill  text-primary fw-bold"
                                     onChange={
-                                        (e) =>
+                                        (e) =>{
                                             setUsername(e.target.value)
+                                            setMsg("")
+                                        }
                                     }
 
                                     value={username}
@@ -182,8 +187,10 @@ const AddCustomer = () => {
                                 <label className="form-label">Password<span className='text-danger'>*</span></label>
                                 <input type="text" className="form-control rounded-pill  text-primary fw-bold"
                                     onChange={
-                                        (e) =>
+                                        (e) =>{
                                             setPassword(e.target.value)
+                                            setMsg("")
+                                        }
                                     }
 
                                     value={password}
@@ -208,7 +215,7 @@ const AddCustomer = () => {
             </div>
 
 
-        </>
+        </div>
     )
 }
 

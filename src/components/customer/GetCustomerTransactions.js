@@ -3,6 +3,7 @@ import { getTransactionByUsername } from '../../services/account/AccountsApi'
 import Table from '../shared/table/Table';
 import PaginationApp from '../shared/table/PaginationApp';
 import PageSelect from '../shared/table/PageSelect';
+import { useNavigate } from 'react-router-dom';
 
 const GetCustomerTransactions = ({ accountNumber }) => {
 
@@ -22,6 +23,24 @@ const GetCustomerTransactions = ({ accountNumber }) => {
       setData(response.data.transactions.content)
     }
   }
+
+  // const [userValid, setUserValid] = useState(false);
+  // const naviagate = new useNavigate();
+
+  // const validateUser = () => {
+  //     if (localStorage.getItem('auth') == null ||  localStorage.getItem('role') == null || localStorage.getItem('role') != 'USER') {
+  //         alert("you are not logged in")
+  //         naviagate('/');
+  //     }
+  //     else {
+  //         setUserValid(true);
+  //     }
+  // }
+
+  // useEffect(() => {
+  //     validateUser();
+  // }, [])
+
   useEffect(() => {
 
     getCustomerTransactions();

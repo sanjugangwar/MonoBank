@@ -9,7 +9,7 @@ const AddAccount = () => {
     const [customerId, setCustomerId] = useState("");
     const [bankId, setBankId] = useState("");
     const [balance, setBalance] = useState("");
-    const [data, setData] = useState();
+    const [data, setData] = useState([]);
     const [customers, setCustomers] = useState([]);
     const [banks, setBanks] = useState([]);
     const [msg,setMsg]=useState();
@@ -39,7 +39,7 @@ const AddAccount = () => {
             response = await saveAccount(customerId, bankId, balance);
         }
         catch(error){
-            alert("some error occured");
+            // alert("some error occured");
             return ;
         }
         setData(response);

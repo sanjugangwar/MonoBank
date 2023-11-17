@@ -1,5 +1,7 @@
 .App {
-  text-align: center;
+  height: 135vh!important;
+  width: 100vw!important;
+
 }
 
 .App-logo {
@@ -52,4 +54,6 @@
 body {
   background-image: url("images/beam.jpg");
 }
+
+
 

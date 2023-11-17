@@ -58,8 +58,9 @@ export const GetAllBanks = ({ props }) => {
     }
 
 
-    const handleDelete = async (bankId) => {
-        let response = await deleteBank(bankId);
+    const handleDelete = async (bank) => {
+        console.log(bank);
+        let response = await deleteBank(bank.bankId);
         setUpdateData(response);
     }
 

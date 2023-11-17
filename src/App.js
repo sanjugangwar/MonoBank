@@ -15,10 +15,13 @@ import AccountsDetail from './components/account/AccountsDetail';
 import AllCustomerDetails from './components/customer/AllCustomerDetails';
 import Passbook from './components/customer/Passbook';
 import AllTransactions from './components/bank/AllTransactions';
+import { useEffect } from 'react';
 
 function App() {
+  
   return (
-    <>
+    <div >
+      <div className='App'>
     <Navbar></Navbar>
     <Routes>
         <Route exact path="/" element={<Login></Login>}></Route>
@@ -37,8 +40,9 @@ function App() {
         <Route exact path="/passbook" element={<Passbook></Passbook>}></Route>
         <Route exact path="/showAllTransactions" element={<AllTransactions></AllTransactions>}></Route>
       </Routes>
-
-    </>
+      </div>
+      <Footer></Footer>
+    </div>
 
   );
 }

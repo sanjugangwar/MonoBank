@@ -55,9 +55,9 @@ const AllTransactions = () => {
 
             <div>
                 <div className='container'>
-                    <div className='row'>
+                    <div className='row mt-3'>
 
-                        <div className='col-7'>
+                        <div className='col-5'>
                             <PaginationApp
                                 totalPages={totalPages}
                                 pageSize={pageSize}
@@ -89,7 +89,7 @@ const AllTransactions = () => {
 
                         </div>
 
-                        <div className='col-2 '>
+                        <div className='col-2 offset-2'>
 
                             <PageSelect
 

@@ -29,7 +29,7 @@ export const updateBank = async (name, abbrebiation, branch, ifsc) => {
 
 export const deleteBank = async (bankId) => {
 
-    try {
+    // try {
 
         let response = await axios.delete(
             'http://localhost:8084/bankapp/deleteBank', {
@@ -43,9 +43,9 @@ export const deleteBank = async (bankId) => {
         )
 
         return response;
-    } catch (error) {
-        alert("some error occured")
-    }
+    // } catch (error) {
+    //     alert("some error occured")
+    // }
 
 
 }

@@ -8,26 +8,30 @@ import PaginationApp from '../shared/table/PaginationApp';
 const Passbook = () => {
     const [accountNumber, setAccountNumber] = useState('');
     const [accounts, setAccounts] = useState([]);
+    const [userValid, setUserValid] = useState(false);
 
 
     const getAccounts = async () => {
+        try{
         let response = await getCustomerAccounts();
         setAccounts(response.data);
         console.log(response.data);
+        }
+        catch(error){
+            alert("some error occured")
+        }
     }
 
-
+    
     const naviagate = new useNavigate();
 
     const validateUser = () => {
-        if (localStorage.getItem('auth') == null) {
+        if (localStorage.getItem('auth') == null ||  localStorage.getItem('role') == null || localStorage.getItem('role') != 'USER') {
+            alert("you are not logged in")
             naviagate('/');
         }
-        if (localStorage.getItem('auth') == null) {
-            naviagate('/');
-        }
-        if (localStorage.getItem('role') == null || localStorage.getItem('role') != 'USER') {
-            naviagate('/');
+        else {
+            setUserValid(true);
         }
     }
 
@@ -36,10 +40,12 @@ const Passbook = () => {
     }, [])
 
     useEffect(() => {
+        if (userValid) {
+            console.log("get accounts ")
+            getAccounts();
+        }
 
-        getAccounts();
-
-    }, [accountNumber])
+    }, [accountNumber,userValid])
 
     return (
         <div>
@@ -51,7 +57,7 @@ const Passbook = () => {
 
                     <div className='col-4 offset-2'></div>
 
-                   
+
 
                     <div className='col-6 offset-3'>
 

@@ -93,7 +93,7 @@ const Login = () => {
 
                                     value={password}
                                 />
-                                <button className='text-primary border-0'
+                                <button className='border-0 btn btn-outline-primary'
                                 onClick={
                                     (e)=>{
                                         e.preventDefault()
@@ -102,7 +102,7 @@ const Login = () => {
                                         setType("text")
                                     }
                                 }
-                                ><i class="bi bi-eye-fill"></i></button>
+                                ><i class="bi bi-eye-fill px-2"></i></button>
                                 </div>
                             </div>
                             <button type="submit" className="btn-lg btn-success rounded-pill border-0"

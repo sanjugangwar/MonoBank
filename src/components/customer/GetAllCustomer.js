@@ -46,7 +46,6 @@ export const GetAllCustomer = (props) => {
   }
 
   const handleUpdate = (d) => {
-
     setName(d.name);
     setSurname(d.surname);
     setMobile(d.mobile);

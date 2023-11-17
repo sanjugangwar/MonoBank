@@ -49,10 +49,11 @@ const EditProfile = () => {
         }
 
         response = await updateCustomer(customer.id, firstName, lastName, mobile, email);
-        setFirstName("");
-        setLastName("");
-        setMobile("");
-        setEmail("");
+        // setFirstName("");
+        // setLastName("");
+        // setMobile("");
+        // setEmail("");
+        alert("Profile updated successfully")
 
     }
 

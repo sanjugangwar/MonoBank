@@ -3,9 +3,9 @@ import './Footer.css'
 
 const Footer = () => {
     return (
-        <div style={{}}>
-            <div >
-               copyright©monocept
+        <div >
+            <div className='text-center text-danger fw-bold borderfooter fs-3' >
+               copyright © monocept
             </div>
 
             

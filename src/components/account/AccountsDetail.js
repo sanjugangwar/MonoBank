@@ -12,9 +12,6 @@ const AccountsDetail = () => {
         if(localStorage.getItem('auth')==null){
             naviagate('/');
         }
-        if(localStorage.getItem('auth')==null){
-            naviagate('/');
-        }
         if(localStorage.getItem('role')==null || localStorage.getItem('role')!='ADMIN'){
             naviagate('/');
         }
