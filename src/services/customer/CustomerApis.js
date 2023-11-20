@@ -22,7 +22,7 @@ export const updateCustomer = async (id, name, surname, mobile, email) => {
         return response;
     }
     catch (error) {
-        alert("some error occured")
+        throw error;
     }
 
 
@@ -45,7 +45,7 @@ export const deleteCustomer = async (id) => {
 
         return response;
     } catch (error) {
-        alert("some error occured")
+        throw error;
     }
 
 
@@ -67,7 +67,7 @@ export const getAllCustomerDetails = async () => {
         return response;
     }
     catch (error) {
-        alert("some error occured")
+        throw error;
     }
 
 
@@ -90,7 +90,7 @@ export const getBanksByCustomerId = async (customerId) => {
 
         return response;
     } catch (error) {
-        alert("some error occured")
+        throw error;
     }
 
 }
@@ -113,7 +113,62 @@ export const getCustomerByUsername = async () => {
 
         return response;
     } catch (error) {
-        alert("some error occured")
+        throw error;
+    }
+
+
+}
+
+export const getAllUsers = async (pagenumber, pagesize) => {
+
+    try {
+
+        let response = await axios.get(
+            'http://localhost:8084/bankapp/getAllCustomer', {
+            params: {
+                pageNumber: pagenumber,
+                pageSize: pagesize
+            }
+        }
+        )
+
+        return response;
+    }
+    catch (error) {
+        
+        throw error;
+
+    }
+
+
+}
+
+export const saveCustomer = async (name, surname, mobile, email, username, password) => {
+
+    try {
+
+        let response = await axios.post(
+            'http://localhost:8084/bankapp/addCustomer', {
+            name: name,
+            surname: surname,
+            mobile: mobile,
+            email: email,
+            userName: username,
+            password: password
+
+        }, {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('auth')
+            }
+        }
+
+        )
+
+        return response;
+    } catch (error) {
+        
+        throw error;
+
     }
 
 

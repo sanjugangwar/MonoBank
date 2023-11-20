@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { getAllBanks } from '../../services/ApiService';
 import Table from '../shared/table/Table';
 import PaginationApp from '../shared/table/PaginationApp';
 import PageSelect from '../shared/table/PageSelect';
 import EditBank from './EditBank'
-import { deleteBank, updateBank } from '../../services/bank/BankApis';
+import { deleteBank, getAllBanks, updateBank } from '../../services/bank/BankApis';
 
 export const GetAllBanks = ({ props, valid }) => {
 

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { GetAllCustomer } from './GetAllCustomer';
-import { saveCustomer } from '../../services/ApiService';
 import { eightCharAlphanumericPasswordRegex, emailRegex, indianMobileRegex, nameRegex } from '../shared/validation/Validation';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../shared/navbar/Navbar';
+import { saveCustomer } from '../../services/customer/CustomerApis';
 
 const AddCustomer = () => {
     console.log("add bank render ")
@@ -65,7 +65,6 @@ const AddCustomer = () => {
         catch (error) {
             alert(error.response.data.message)
             setMsg("");
-            // console.log(error);
 
         }
 

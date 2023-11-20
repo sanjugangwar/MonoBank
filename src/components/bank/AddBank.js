@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { GetAllBanks } from './GetAllBanks'
-import { saveBank } from '../../services/ApiService';
 import { useNavigate } from 'react-router-dom';
 import { bankNameRegex, ifscCodeRegex, nameRegex } from '../shared/validation/Validation';
 import Navbar from '../shared/navbar/Navbar';
+import { saveBank } from '../../services/bank/BankApis';
 
 const AddBank = () => {
     console.log("add bank render ")

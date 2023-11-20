@@ -16,7 +16,7 @@ export const getCustomerAccounts = async () => {
         return response;
     }
     catch (error) {
-        alert("some error occured ")
+        throw error;
     }
 }
 
@@ -41,7 +41,7 @@ export const transaction = async (accountNo, recieverAccount, type, amount) => {
         return response;
     }
     catch (error) {
-        alert("some error occured")
+        throw error;
     }
 
 }
@@ -68,7 +68,7 @@ export const getTransactionByUsername = async (accountNo, pageNumber, pageSize) 
         return response;
     }
     catch (error) {
-        alert("some error occured")
+        throw error;
     }
 
 
@@ -92,7 +92,7 @@ export const showAllTransactions = async (pageNumber, pageSize) => {
         return response;
     }
     catch (error) {
-        alert("some error occured")
+        throw error;
     }
 
 }
