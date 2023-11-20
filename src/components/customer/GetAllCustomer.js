@@ -24,24 +24,35 @@ export const GetAllCustomer = (props) => {
   const [updateData, setUpdateData] = useState();
   let searchs = '';
   const [filteredData, setFilteredData] = useState([]);
+  let valid = props.valid;
 
 
-  const handleSubmit = async () => {
-    let response;
-    response = await getAllCustomers(pageNumber, pageSize);
-    console.log(response);
-    setCustomers(response.data.content);
-    setTotalElements(parseInt(response.headers['customer-count']));
-    setTotalPages(Math.ceil(parseInt(response.headers['customer-count']) / pageSize));
-    console.log(response.request.responseURL)
-
+  const getCustomer = async () => {
+    try {
+      let response;
+      response = await getAllCustomers(pageNumber, pageSize);
+      console.log(response);
+      setCustomers(response.data.content);
+      setFilteredData([])
+      setTotalElements(parseInt(response.headers['customer-count']));
+      setTotalPages(Math.ceil(parseInt(response.headers['customer-count']) / pageSize));
+      console.log(response.request.responseURL)
+    }
+    catch (error) {
+      alert(error.response.data.message)
+    }
 
   }
 
   const handleDelete = async (d) => {
-
-    let response = await deleteCustomer(d.id);
-    setUpdateData(response);
+    try {
+      let response = await deleteCustomer(d.id);
+      setPageNumber(0);
+      setUpdateData(response);
+    }
+    catch (error) {
+      alert(error.response.data.message);
+    }
 
   }
 
@@ -55,13 +66,19 @@ export const GetAllCustomer = (props) => {
   }
 
   const updateCustomerHandler = async () => {
-    let response = await updateCustomer(customerId, name, surname, mobile, email);
-    setUpdateData(response);
+    try {
+      let response = await updateCustomer(customerId, name, surname, mobile, email);
+      setUpdateData(response);
+    }
+    catch (error) {
+      alert(error.response.data.message);
+    }
 
   }
 
   useEffect(() => {
-    handleSubmit();
+    if (valid)
+      getCustomer();
   }, [totalElements, pageSize, pageNumber, props, updateData])
 
 

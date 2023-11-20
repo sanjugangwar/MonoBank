@@ -22,7 +22,6 @@ function App() {
   return (
     <div >
       <div className='App'>
-    <Navbar></Navbar>
     <Routes>
         <Route exact path="/" element={<Login></Login>}></Route>
         <Route exact path="/admin" element={<Admin></Admin>}></Route>

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import './Admin.css'
 import HeadingTag from '../shared/HeadingTag'
 import { useNavigate } from 'react-router-dom';
+import Navbar from '../shared/navbar/Navbar';
 const Admin = () => {
 
     const naviagate=new useNavigate();
@@ -25,7 +26,7 @@ const Admin = () => {
     return (
         <>
             
-
+            <Navbar></Navbar>
             <div className='container '>
 
                 <HeadingTag first="Admin" second="Dashboard"></HeadingTag>

@@ -6,7 +6,7 @@ import PageSelect from '../shared/table/PageSelect';
 import EditBank from './EditBank'
 import { deleteBank, updateBank } from '../../services/bank/BankApis';
 
-export const GetAllBanks = ({ props }) => {
+export const GetAllBanks = ({ props, valid }) => {
 
 
     const [pageNumber, setPageNumber] = useState(0);
@@ -23,52 +23,64 @@ export const GetAllBanks = ({ props }) => {
     const [abbrebiation, setAbbrebiation] = useState("");
     const [ifsc, setIfsc] = useState();
 
-    
 
-    const handleSubmit = async () => {
-        console.log("handleSubmit called in get all banks")
-        let response;
-        response = await getAllBanks(pageNumber, pageSize);
-        console.log(response);
-        setData(response.data.content);
-        setTotalElements(parseInt(response.headers['bank-count']));
-        setTotalPages(Math.ceil(parseInt(response.headers['bank-count']) / pageSize));
-        console.log(response.request.responseURL)
+
+    const getBanks = async () => {
+        try {
+            let response = await getAllBanks(pageNumber, pageSize);
+            console.log(response);
+            setData(response.data.content);
+            setTotalElements(parseInt(response.headers['bank-count']));
+            setTotalPages(Math.ceil(parseInt(response.headers['bank-count']) / pageSize));
+            console.log(response.request.responseURL)
+        }
+        catch (error) {
+            console.log(error);
+            alert("some error occured")
+        }
 
     }
 
-    const handleUpdate=async(bank)=>{
-           setBankName(bank.bankName)
-           setBranch(bank.branch)
-           setAbbrebiation(bank.abbrevation)
-           setIfsc(bank.ifsc);
-           setShow(true);
+    const handleUpdate = async (bank) => {
+        setBankName(bank.bankName)
+        setBranch(bank.branch)
+        setAbbrebiation(bank.abbrevation)
+        setIfsc(bank.ifsc);
+        setShow(true);
     }
 
-   
+
 
     const callUpdateBank = async (bankName, abbrebiation, branch, ifsc) => {
-
-        console.log("BEFORE update bank response")
-        let response = await updateBank(bankName, abbrebiation, branch, ifsc);
-        setUpdateData(response);
-        console.log("AFTER update bank response")
-        console.log(response);
+        try {
+            let response = await updateBank(bankName, abbrebiation, branch, ifsc);
+            setUpdateData(response);
+        }
+        catch (error) {
+            console.log("Some error occured")
+        }
 
     }
 
 
     const handleDelete = async (bank) => {
-        console.log(bank);
-        let response = await deleteBank(bank.bankId);
-        setUpdateData(response);
+        try {
+            let response = await deleteBank(bank.bankId);
+            setUpdateData(response);
+            setPageNumber(0);
+        }
+        catch (error) {
+            console.log("Some error occured")
+        }
     }
 
 
     useEffect(() => {
-        handleSubmit();
+        if (valid) {
+            getBanks();
+        }
 
-    }, [totalElements, pageSize, pageNumber, updateResponse, props, updateData])
+    }, [totalElements, pageSize, pageNumber, updateResponse, props, updateData, valid])
 
 
 
@@ -79,20 +91,20 @@ export const GetAllBanks = ({ props }) => {
     return (
         <>
             <EditBank
-         bankName={bankName} 
-         abbrebiation={abbrebiation} 
-         branch={branch}
-         setBankName={setBankName}
-         setAbbrebiation={setAbbrebiation}
-         setBranch={setBranch}
-         show={show}
-         setShow={setShow}
-         ifsc={ifsc}
-         callUpdateBank={callUpdateBank}
-         
-         ></EditBank>
+                bankName={bankName}
+                abbrebiation={abbrebiation}
+                branch={branch}
+                setBankName={setBankName}
+                setAbbrebiation={setAbbrebiation}
+                setBranch={setBranch}
+                show={show}
+                setShow={setShow}
+                ifsc={ifsc}
+                callUpdateBank={callUpdateBank}
 
-           
+            ></EditBank>
+
+
 
             <div className='container'>
                 <div className='row my-5'>
@@ -102,7 +114,7 @@ export const GetAllBanks = ({ props }) => {
                             pageSize={pageSize}
                             setPageNumber={setPageNumber}
                             pageNumber={pageNumber}
-                            getAllData={handleSubmit}
+                            
 
                         >
                         </PaginationApp>

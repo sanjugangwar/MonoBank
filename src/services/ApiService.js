@@ -19,7 +19,8 @@ export const getAllBanks = async (pagenumber, pagesize) => {
         return response;
     }
     catch (error) {
-        alert("some error occured")
+        
+        throw error;
     }
 
 
@@ -41,7 +42,9 @@ export const getAllUsers = async (pagenumber, pagesize) => {
         return response;
     }
     catch (error) {
-        alert("some error occured")
+        
+        throw error;
+
     }
 
 
@@ -49,7 +52,7 @@ export const getAllUsers = async (pagenumber, pagesize) => {
 
 export const saveBank = async (name, abbrebiation, branch, ifsc) => {
 
-    // try {
+    try {
 
         let response = await axios.post(
             'http://localhost:8084/bankapp/addBank', {
@@ -67,9 +70,9 @@ export const saveBank = async (name, abbrebiation, branch, ifsc) => {
         )
 
         return response;
-    // } catch (error) {
-    //     alert("some error occured")
-    // }
+    } catch (error) {
+        throw error;
+    }
 
 
 }
@@ -97,7 +100,9 @@ export const saveCustomer = async (name, surname, mobile, email, username, passw
 
         return response;
     } catch (error) {
-        alert("some error occured")
+        
+        throw error;
+
     }
 
 
@@ -105,7 +110,7 @@ export const saveCustomer = async (name, surname, mobile, email, username, passw
 
 export const login = async (userName, password) => {
 
-    // try {
+    try {
         let response = await axios.post(
             'http://localhost:8084/bankapp/login', {
             username: userName,
@@ -113,9 +118,9 @@ export const login = async (userName, password) => {
         }
         )
         return response;
-    // } catch (error) {
-    //     alert("some error occured")
-    // }
+    } catch (error) {
+        throw error;
+    }
 
 }
 
@@ -138,7 +143,7 @@ export const getAllAccounts = async (pagenumber, pagesize) => {
 
         return response;
     } catch (error) {
-        alert("some error occured")
+       throw error;
     }
 
 
@@ -163,7 +168,7 @@ export const getAllCustomers = async (pagenumber, pagesize) => {
 
         return response;
     } catch (error) {
-        alert("some error occured")
+        throw error
     }
 
 
@@ -171,7 +176,7 @@ export const getAllCustomers = async (pagenumber, pagesize) => {
 
 export const saveAccount = async (customerId, bankId, balance) => {
 
-    // try {
+    try {
 
         let response = await axios.post(
             'http://localhost:8084/bankapp/addAccount', {
@@ -187,9 +192,9 @@ export const saveAccount = async (customerId, bankId, balance) => {
         )
 
         return response;
-    // } catch (error) {
-    //     alert("some error occured")
-    // }
+    } catch (error) {
+        throw error;
+    }
 
 
 }

@@ -5,6 +5,7 @@ import Table from '../shared/table/Table';
 import { useNavigate } from 'react-router-dom';
 import PaginationApp from '../shared/table/PaginationApp';
 import PageSelect from '../shared/table/PageSelect';
+import Navbar from '../shared/navbar/Navbar';
 
 const AllTransactions = () => {
     const [pageNumber, setPageNumber] = useState(0);
@@ -12,7 +13,8 @@ const AllTransactions = () => {
     const [totalPages, setTotalPages] = useState();
     const [totalElements, setTotalElements] = useState();
     const [filteredData, setFilteredData] = useState([]);
-    let search='';
+    const [valid, setValid] = useState(false);
+    let search = '';
 
     const [data, setData] = useState([]);
 
@@ -21,6 +23,7 @@ const AllTransactions = () => {
         setTotalElements(parseInt(response.headers['totalelements']));
         setTotalPages(Math.ceil(parseInt(response.headers['totalelements']) / pageSize));
         setData(response.data.content)
+        setFilteredData([])
         console.log(response)
     }
 
@@ -28,15 +31,11 @@ const AllTransactions = () => {
     const naviagate = new useNavigate();
 
     const validateUser = () => {
-        if (localStorage.getItem('auth') == null) {
+        if (localStorage.getItem('auth') == null || localStorage.getItem('role') == null || localStorage.getItem('role') != 'ADMIN') {
+            alert("You are not logged in ")
             naviagate('/');
         }
-        if (localStorage.getItem('auth') == null) {
-            naviagate('/');
-        }
-        if (localStorage.getItem('role') == null || localStorage.getItem('role') != 'ADMIN') {
-            naviagate('/');
-        }
+        setValid(true);
     }
 
 
@@ -48,82 +47,84 @@ const AllTransactions = () => {
     }, [pageNumber, pageSize, totalElements, totalPages])
 
     return (
-        <div>
-
-            <HeadingTag first="All" second="Transactions"></HeadingTag>
-
-
+        <>
+            <Navbar></Navbar>
             <div>
-                <div className='container'>
-                    <div className='row mt-3'>
+                <HeadingTag first="All" second="Transactions"></HeadingTag>
 
-                        <div className='col-5'>
-                            <PaginationApp
-                                totalPages={totalPages}
-                                pageSize={pageSize}
-                                setPageNumber={setPageNumber}
-                                pageNumber={pageNumber}
-                            >
-                            </PaginationApp>
 
-                        </div>
+                <div>
+                    <div className='container'>
+                        <div className='row mt-3'>
 
-                        <div className='col-3'>
+                            <div className='col-5'>
+                                <PaginationApp
+                                    totalPages={totalPages}
+                                    pageSize={pageSize}
+                                    setPageNumber={setPageNumber}
+                                    pageNumber={pageNumber}
+                                >
+                                </PaginationApp>
 
-                            <input className='rounded-pill px-3 text-primary fw-bold'
-                                placeholder='search here'
-                                onChange={(e) => {
-                                    search = e.target.value;
-                                    let dat = data.filter((d) => {
-                                        return search.toLowerCase === '' ?
-                                            d :
-                                            d.transactionId.toString().includes(search)
-                                            || d.accountNumber.toString().includes(search)
-                                            || d.recieverAccount.toString().includes(search)
-                                            || d.type.includes(search)
-                                            || d.amount.toString().includes(search)
-                                    })
-                                    setFilteredData(dat);
-                                }}
-                            ></input>
+                            </div>
 
-                        </div>
+                            <div className='col-3'>
 
-                        <div className='col-2 offset-2'>
+                                <input className='rounded-pill px-3 text-primary fw-bold'
+                                    placeholder='search here'
+                                    onChange={(e) => {
+                                        search = e.target.value;
+                                        let dat = data.filter((d) => {
+                                            return search.toLowerCase === '' ?
+                                                d :
+                                                d.transactionId.toString().includes(search)
+                                                || d.accountNumber.toString().includes(search)
+                                                || d.recieverAccount.toString().includes(search)
+                                                || d.type.includes(search)
+                                                || d.amount.toString().includes(search)
+                                        })
+                                        setFilteredData(dat);
+                                    }}
+                                ></input>
 
-                            <PageSelect
+                            </div>
 
-                                totalElements={totalElements}
-                                setPageSize={setPageSize}
-                                setPageNumber={setPageNumber}
-                                setTotalPages={setTotalPages}
-                                pageSize={pageSize}
+                            <div className='col-2 offset-2'>
 
-                            >
-                            </PageSelect>
+                                <PageSelect
 
-                        </div>
+                                    totalElements={totalElements}
+                                    setPageSize={setPageSize}
+                                    setPageNumber={setPageNumber}
+                                    setTotalPages={setTotalPages}
+                                    pageSize={pageSize}
 
-                        <div className='col-10 offset-1'>
+                                >
+                                </PageSelect>
 
-                            <Table
-                                data={filteredData.length == 0 ? data : filteredData}
-                                canUpdate={false}
-                                canDelete={false}
-                            ></Table>
+                            </div>
+
+                            <div className='col-10 offset-1'>
+
+                                <Table
+                                    data={filteredData.length == 0 ? data : filteredData}
+                                    canUpdate={false}
+                                    canDelete={false}
+                                ></Table>
+
+                            </div>
 
                         </div>
 
                     </div>
 
+
+
                 </div>
 
 
-
             </div>
-
-
-        </div>
+        </>
     )
 }
 

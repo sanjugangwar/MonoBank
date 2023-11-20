@@ -1,35 +1,35 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { GetAllCustomer } from './GetAllCustomer'
 import HeadingTag from '../shared/HeadingTag'
 import { useNavigate } from 'react-router-dom'
+import Navbar from '../shared/navbar/Navbar'
 
 const AllCustomerDetails = () => {
 
-    const naviagate=new useNavigate();
+    const naviagate = new useNavigate();
+    const [valid, setValid] = useState(false);
 
-    const validateUser=()=>{
-        if(localStorage.getItem('auth')==null){
+    const validateUser = () => {
+        if (localStorage.getItem('auth') == null || localStorage.getItem('role') == null || localStorage.getItem('role') != 'ADMIN') {
+            alert("You are not logged in ")
             naviagate('/');
         }
-        if(localStorage.getItem('auth')==null){
-            naviagate('/');
-        }
-        if(localStorage.getItem('role')==null || localStorage.getItem('role')!='ADMIN'){
-            naviagate('/');
-        }
+        setValid(true);
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         validateUser();
-    },[])
+    }, [])
 
     return (
-        <div>
+        <>
+            <Navbar></Navbar>
+            <div>
+                <HeadingTag first="Customers" second="Detail"></HeadingTag>
+                <GetAllCustomer search={true} valid={valid}></GetAllCustomer>
 
-            <HeadingTag first="Customers" second="Detail"></HeadingTag>
-            <GetAllCustomer search={true}></GetAllCustomer>
-
-        </div>
+            </div>
+        </>
     )
 }
 

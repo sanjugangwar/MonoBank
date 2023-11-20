@@ -13,22 +13,29 @@ const GetAllAccounts = (props) => {
   const [totalElements, setTotalElements] = useState();
   const [filteredData, setFilteredData] = useState('');
   let search = '';
+  let valid = props.valid;
 
   const handleApi = async () => {
-    let response = await getAllAccounts(pageNumber, pageSize);
-    setAccounts(response.data.content);
-    setTotalElements(parseInt(response.headers['account-count']));
-    setTotalPages(Math.ceil(parseInt(response.headers['account-count']) / pageSize));
-    console.log(response);
+    try {
+      let response = await getAllAccounts(pageNumber, pageSize);
+      setAccounts(response.data.content);
+      setTotalElements(parseInt(response.headers['account-count']));
+      setTotalPages(Math.ceil(parseInt(response.headers['account-count']) / pageSize));
+      console.log(response);
+    }
+    catch (error) {
+      alert(error.response.data.message)
+    }
   }
 
 
 
   useEffect(() => {
+    if (valid) {
+      handleApi();
+    }
 
-    handleApi();
-
-  }, [pageNumber, pageSize, props])
+  }, [pageNumber, pageSize, props, valid])
 
   return (
     <div className='container'>
@@ -65,9 +72,9 @@ const GetAllAccounts = (props) => {
                   setFilteredData(d);
                 }}
               ></input>
-              :null
+              : null
 
-        }
+          }
         </div>
         <div className='col-2 offset-1'>
 

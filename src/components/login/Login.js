@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { login } from '../../services/ApiService';
 import { useNavigate } from 'react-router-dom';
 import HeadingTag from '../shared/HeadingTag';
-import { Navbar } from 'react-bootstrap';
+import Navbar from '../shared/navbar/Navbar';
 
 const Login = () => {
 

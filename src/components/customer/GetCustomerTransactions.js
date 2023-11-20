@@ -21,6 +21,7 @@ const GetCustomerTransactions = ({ accountNumber }) => {
       setTotalElements(parseInt(response.headers['totalelements']));
       setTotalPages(Math.ceil(parseInt(response.headers['totalelements']) / pageSize));
       setData(response.data.transactions.content)
+      setFilteredData([])
     }
   }
 

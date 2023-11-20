@@ -3,6 +3,7 @@ import GetAllAccounts from './GetAllAccounts';
 import { saveAccount } from '../../services/ApiService';
 import { getAllCustomerDetails, getBanksByCustomerId } from '../../services/customer/CustomerApis';
 import { useNavigate } from 'react-router-dom';
+import Navbar from '../shared/navbar/Navbar';
 
 const AddAccount = () => {
 
@@ -12,78 +13,83 @@ const AddAccount = () => {
     const [data, setData] = useState([]);
     const [customers, setCustomers] = useState([]);
     const [banks, setBanks] = useState([]);
-    const [msg,setMsg]=useState();
+    const [msg, setMsg] = useState();
+    const [valid, setValid] = useState(false);
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!customerId || customerId=="select") {
+        if (!customerId || customerId == "select") {
             setMsg("select customer id")
             return;
         }
 
-        if (!bankId || bankId=="select") {
+        if (!bankId || bankId == "select") {
             setMsg("select bank id")
             return;
         }
 
-        if(balance<5000){
+        if (balance < 5000) {
             setMsg("Minimum balance is 5000")
-            return ;
+            return;
         }
 
         console.log(customerId + "  " + bankId + "  " + balance)
-        let response;
-        try{
-            response = await saveAccount(customerId, bankId, balance);
+        try {
+            let response = await saveAccount(customerId, bankId, balance);
+            setData(response);
+            console.log(response);
+            setBalance("");
+            setBankId("");
+            setCustomerId("");
+    
         }
-        catch(error){
-            // alert("some error occured");
-            return ;
+        catch (error) {
+            
+            alert(error.response.data.message)
         }
-        setData(response);
-        console.log(response);
-        setBalance("");
-        setBankId("");
-        setCustomerId("");
-
+       
 
 
     }
 
     const findCustomers = async () => {
-        console.log("calling all customers")
-        let response = await getAllCustomerDetails();
-        console.log(response)
-        setCustomers(response.data);
+        try {
+            let response = await getAllCustomerDetails();
+            console.log(response)
+            setCustomers(response.data);
+        }
+        catch (error) {
+            alert(error.response.data.message);
+        }
     }
 
     const showBanks = async () => {
 
-        if (customerId=="" || customerId=="select") {
+        if (customerId == "" || customerId == "select") {
             setMsg("select customer id")
             return;
         }
-        console.log("calling for bank ids")
+        try{
         let response = await getBanksByCustomerId(customerId);
         setBanks(response.data);
         console.log(response.data);
+        }
+        catch(error){
+            alert(error.response.data.message);
+        }
 
     }
 
-    const naviagate=new useNavigate();
+    const naviagate = new useNavigate();
 
-    const validateUser=()=>{
-        if(localStorage.getItem('auth')==null){
+    const validateUser = () => {
+        if (localStorage.getItem('auth') == null || localStorage.getItem('role') == null || localStorage.getItem('role') != 'ADMIN') {
+            alert("You are not logged in ")
             naviagate('/');
         }
-        if(localStorage.getItem('auth')==null){
-            naviagate('/');
-        }
-        if(localStorage.getItem('role')==null || localStorage.getItem('role')!='ADMIN'){
-            naviagate('/');
-        }
+        setValid(true);
     }
 
 
@@ -104,6 +110,7 @@ const AddAccount = () => {
 
     return (
         <>
+            <Navbar></Navbar>
             <div className="container">
 
                 <div className="row">
@@ -115,7 +122,7 @@ const AddAccount = () => {
                     <div className="col-8 offset-2">
 
                         <form className="shadow-lg p-5">
-                        <div className='text-center text-danger'>{msg}</div>
+                            <div className='text-center text-danger'>{msg}</div>
                             <div className="mb-3">
                                 <label className="form-label">CustomerId<span className='text-danger'>*</span></label>
                                 <select class="form-select rounded-pill" aria-label="Default select example"
@@ -138,9 +145,9 @@ const AddAccount = () => {
                                 customerId && customerId !== "select" ? <div className="mb-3">
                                     <label className="form-label">Customer Name</label>
                                     <input type="text" className="form-control rounded-pill text-primary fw-bold"
-                                        value={customers.find((customer)=>{
+                                        value={customers.find((customer) => {
 
-                                            return customer.id==customerId;
+                                            return customer.id == customerId;
                                         }).name}
                                     />
                                 </div>
@@ -218,7 +225,7 @@ const AddAccount = () => {
 
                 </div>
 
-                <GetAllAccounts props={data} search={false} ></GetAllAccounts>
+                <GetAllAccounts props={data} search={false} valid={valid}></GetAllAccounts>
 
             </div>
 
